@@ -1,19 +1,19 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import {
-  Row,
-  Col,
-  ListGroup,
-  ListGroupItem,
-  Card,
-  Button,
-} from 'react-bootstrap';
-import Rating from '../components/Rating';
-import products from '../products';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { Link } from "react-router-dom";
+import { Row, Col, ListGroup, Card, Button } from "react-bootstrap";
+import Rating from "../components/Rating";
 
 const ProductScreen = ({ match }) => {
-  const product = products.find((p) => p._id === match.params.id);
-  console.log(product);
+  const [product, setProduct] = useState([]);
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      const { data } = await axios.get(`/api/products/${match.params.id}`);
+      setProduct(data);
+    };
+    fetchProduct();
+  }, [match]);
 
   return (
     <>
@@ -53,7 +53,7 @@ const ProductScreen = ({ match }) => {
               <Row>
                 <Col>Status</Col>
                 <Col>
-                  {product.countInStock > 0 ? 'In Stock' : 'Out Of Stock'}
+                  {product.countInStock > 0 ? "In Stock" : "Out Of Stock"}
                 </Col>
               </Row>
             </ListGroup.Item>
@@ -63,8 +63,8 @@ const ProductScreen = ({ match }) => {
                 type='button'
                 disabled={product.countInStock === 0}
               >
-                {' '}
-                ADD TO CART{' '}
+                {" "}
+                ADD TO CART{" "}
               </Button>
             </ListGroup.Item>
           </Card>
