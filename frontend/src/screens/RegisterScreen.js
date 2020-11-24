@@ -1,37 +1,37 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { Row, Col, Form, Button } from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
-import Message from "../components/Message";
-import Loader from "../components/Loader";
-import { register } from "../actions/userActions";
-import FormContainer from "../components/FormContainer";
+import React, { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
+import { Row, Col, Form, Button } from 'react-bootstrap'
+import { useDispatch, useSelector } from 'react-redux'
+import Message from '../components/Message'
+import Loader from '../components/Loader'
+import FormContainer from '../components/FormContainer'
+import { register } from '../actions/userActions'
 
 const RegisterScreen = ({ location, history }) => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [message, setMessage] = useState("");
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
+  const [message, setMessage] = useState('')
 
-  const dispatch = useDispatch();
-  const userRegister = useSelector((state) => state.userRegister);
-  const { loading, error, userInfo } = userRegister;
+  const dispatch = useDispatch()
+  const userRegister = useSelector((state) => state.userRegister)
+  const { loading, error, userInfo } = userRegister
 
-  const redirect = location.search ? location.search.split("=")[1] : "/";
+  const redirect = location.search ? location.search.split('=')[1] : '/'
 
   useEffect(() => {
-    userInfo && history.push(redirect);
-  }, [history, userInfo, redirect]);
+    userInfo && history.push(redirect)
+  }, [history, userInfo, redirect])
 
   const submitHandler = (e) => {
-    e.preventDefault();
+    e.preventDefault()
     if (password !== confirmPassword) {
-      setMessage("Password do not match");
+      setMessage('Password do not match')
     } else {
-      dispatch(register(name, email, password));
+      dispatch(register(name, email, password))
     }
-  };
+  }
   return (
     <FormContainer>
       <h1>Sign Up</h1>
@@ -83,14 +83,14 @@ const RegisterScreen = ({ location, history }) => {
       <Row className='py-3'>
         <Col>
           Have an Account?
-          <Link to={redirect ? `/login?redirect=${redirect}` : "/login"}>
-            {" "}
+          <Link to={redirect ? `/login?redirect=${redirect}` : '/login'}>
+            {' '}
             Login
           </Link>
         </Col>
       </Row>
     </FormContainer>
-  );
-};
+  )
+}
 
-export default RegisterScreen;
+export default RegisterScreen
